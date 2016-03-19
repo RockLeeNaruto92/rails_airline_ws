@@ -74,6 +74,13 @@ class ServicesController < ApplicationController
     end
   end
 
+  soap_action "get_all_flights",
+    return: :string
+
+  def get_all_flights
+    render soap: Flight.all.to_json
+  end
+
   private
   def standarlize_params
     params.keys.each do |key|
