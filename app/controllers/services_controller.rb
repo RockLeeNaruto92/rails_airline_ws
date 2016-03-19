@@ -24,6 +24,15 @@ class ServicesController < ApplicationController
     render soap: messages
   end
 
+  soap_action "is_existed_flight",
+    args: {code: :string},
+    return: :boolean
+
+  def is_existed_flight
+    flight = Flight.find_by code: params[:code]
+    render soap: flight.present?
+  end
+
   private
   def standarlize_params
     params.keys.each do |key|
