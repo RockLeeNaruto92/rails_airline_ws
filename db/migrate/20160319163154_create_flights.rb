@@ -5,8 +5,8 @@ class CreateFlights < ActiveRecord::Migration
       t.integer :airline_id
       t.datetime :start_time
       t.datetime :end_time
-      t.string :from_point
-      t.string :to_destination
+      t.string :start_point
+      t.string :end_point
       t.integer :seats
       t.integer :available_seats
       t.integer :cost

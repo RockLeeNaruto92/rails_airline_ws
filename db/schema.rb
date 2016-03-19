@@ -38,8 +38,8 @@ ActiveRecord::Schema.define(version: 20160319163257) do
     t.integer  "airline_id",      limit: 4
     t.datetime "start_time"
     t.datetime "end_time"
-    t.string   "from_point",      limit: 255
-    t.string   "to_destination",  limit: 255
+    t.string   "start_point",     limit: 255
+    t.string   "end_point",       limit: 255
     t.integer  "seats",           limit: 4
     t.integer  "available_seats", limit: 4
     t.integer  "cost",            limit: 4

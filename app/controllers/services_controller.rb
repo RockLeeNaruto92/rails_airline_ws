@@ -11,6 +11,19 @@ class ServicesController < ApplicationController
     render soap: messages
   end
 
+  soap_action "add_new_flight",
+    args: {code: :string, airlineID: :integer, startTime: :datetime,
+      endTime: :datetime, startPoint: :string, endPoint: :string,
+      seats: :integer, cost: :integer},
+    return: :string
+
+  def add_new_flight
+    standarlize_params
+    flight = Flight.new params
+    messages = flight.save ? I18n.t("action.success") : flight.errors.full_messages
+    render soap: messages
+  end
+
   private
   def standarlize_params
     params.keys.each do |key|
