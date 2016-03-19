@@ -33,6 +33,21 @@ class ServicesController < ApplicationController
     render soap: flight.present?
   end
 
+  soap_action "find_flight_by_code",
+    args: {code: :string},
+    return: :string
+
+  def find_flight_by_code
+    if params[:code].present?
+      flight = Flight.find_by code: params[:code]
+      messages = flight.present? ? flight.to_json : I18n.t("errors.object_not_exist",
+        model: "flight", attr: "code", value: params[:code])
+      render soap: messages
+    else
+      render soap: I18n.t("errors.param_not_present", param: "code")
+    end
+  end
+
   private
   def standarlize_params
     params.keys.each do |key|
