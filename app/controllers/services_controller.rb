@@ -61,6 +61,19 @@ class ServicesController < ApplicationController
     render soap: messages
   end
 
+  soap_action "check_available_flight",
+    args: {flightCode: :string},
+    return: :boolean
+
+  def check_available_flight
+    if params[:flightCode].present?
+      flight = Flight.find_by code: params[:flightCode]
+      render soap: flight.present? && flight.available_seats > 0
+    else
+      render soap: I18n.t("errors.param_not_present", param: "flightCode")
+    end
+  end
+
   private
   def standarlize_params
     params.keys.each do |key|
