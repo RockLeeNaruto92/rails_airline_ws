@@ -4,6 +4,7 @@ gem "rails", "4.2.1"
 gem "mysql2", "~> 0.3.13"
 gem "wash_out"
 gem "sdoc", "~> 0.4.0", group: :doc
+gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw]
 
 group :development, :test do
   gem "byebug"
