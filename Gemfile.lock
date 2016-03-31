@@ -121,5 +121,9 @@ DEPENDENCIES
   rails (= 4.2.1)
   sdoc (~> 0.4.0)
   spring
+  tzinfo-data
   wash_out
   web-console (~> 2.0)
+
+BUNDLED WITH
+   1.11.2
