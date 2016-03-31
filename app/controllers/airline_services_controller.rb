@@ -1,4 +1,4 @@
-class ServicesController < ApplicationController
+class AirlineServicesController < ApplicationController
   soap_service namespace: "urn:airline_ws", wsdl_style: "document"
 
   soap_action "add_new_airline",
@@ -56,8 +56,9 @@ class ServicesController < ApplicationController
     return: {result: :string}
 
   def add_new_constract
-    standarlize_params
-    constract = Constract.new params
+    params = get_constract_params
+
+    constract = Constract.new standarlize_params params
     messages = constract.save ? I18n.t("action.success") : constract.errors.full_messages
     render soap: {result: messages}
   end
@@ -83,12 +84,17 @@ class ServicesController < ApplicationController
   end
 
   private
-  def standarlize_params
+  def standarlize_params params = params
     params.keys.each do |key|
       unless key.to_s == key.to_s.underscore
         params[key.to_s.underscore.to_sym] = params[key]
         params.delete key
       end
     end
+    params
+  end
+
+  def get_constract_params
+    params[:add_new_constract_request]
   end
 end
