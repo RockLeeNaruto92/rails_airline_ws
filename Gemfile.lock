@@ -157,6 +157,3 @@ DEPENDENCIES
   tzinfo-data
   wash_out
   web-console (~> 2.0)
-
-BUNDLED WITH
-   1.11.2
