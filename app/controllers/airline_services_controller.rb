@@ -50,7 +50,7 @@ class AirlineServicesController < ApplicationController
 
   soap_action "add_new_constract",
     args: {add_new_constract_request: {
-      flightID: :integer, customerIdNumber: :string,
+      flightId: :integer, customerIdNumber: :string,
       companyName: :string, companyPhone: :string,
       companyAddress: :string, bookingSeats: :integer}},
     return: {result: :string}
@@ -84,7 +84,7 @@ class AirlineServicesController < ApplicationController
   end
 
   private
-  def standarlize_params params = params
+  def standarlize_params params
     params.keys.each do |key|
       unless key.to_s == key.to_s.underscore
         params[key.to_s.underscore.to_sym] = params[key]
