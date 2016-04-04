@@ -64,15 +64,15 @@ class AirlineServicesController < ApplicationController
   end
 
   soap_action "check_available_flight",
-    args: {flightCode: :string},
-    return: :boolean
+    args: {check_available_flight_request: {flightCode: :string}},
+    return: {result: :string}
 
   def check_available_flight
-    if params[:flightCode].present?
-      flight = Flight.find_by code: params[:flightCode]
-      render soap: flight.present? && flight.available_seats > 0
+    if params[:check_available_flight_request] && params[:check_available_flight_request][:flightCode].present?
+      flight = Flight.find_by code: params[:check_available_flight_request][:flightCode]
+      render soap: {result: (flight.present? && flight.available_seats > 0).to_s}
     else
-      render soap: I18n.t("errors.param_not_present", param: "flightCode")
+      render soap: {result: I18n.t("errors.param_not_present", param: "flightCode")}
     end
   end
 
