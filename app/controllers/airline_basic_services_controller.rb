@@ -25,6 +25,19 @@ class AirlineBasicServicesController < ApplicationController
     render soap: messages
   end
 
+  soap_action "update_flight",
+    args: {id: :integer, code: :string, airlineID: :integer, startTime: :datetime,
+      endTime: :datetime, startPoint: :string, endPoint: :string,
+      seats: :integer, cost: :integer},
+    return: :string
+
+  def update_flight
+    standarlize_params
+    flight = Flight.find params[:id]
+    messages = flight.update_attributes(params) ? I18n.t("action.success") : flight.errors.full_messages
+    render soap: messages
+  end
+
   soap_action "is_existed_flight",
     args: {code: :string},
     return: :boolean
@@ -47,6 +60,14 @@ class AirlineBasicServicesController < ApplicationController
     else
       render soap: I18n.t("errors.param_not_present", param: "code")
     end
+  end
+
+  soap_action "get_flight_by_id",
+    args: {id: :integer},
+    return: :string
+
+  def get_flight_by_id
+    render soap: Flight.find(params[:id]).to_json
   end
 
   soap_action "get_all_flights",
