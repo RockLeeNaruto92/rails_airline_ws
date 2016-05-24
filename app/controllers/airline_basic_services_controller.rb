@@ -12,6 +12,17 @@ class AirlineBasicServicesController < ApplicationController
     render soap: messages
   end
 
+  soap_action "update_airline",
+    args: {id: :integer, code: :string, name: :string, website: :string},
+    return: :string
+
+  def update_airline
+    standarlize_params
+    airline = Airline.find params[:id]
+    messages = airline.update_attributes(params) ? I18n.t("action.success") : airline.errors.full_messages
+    render soap: messages
+  end
+
   soap_action "add_new_flight",
     args: {code: :string, airlineID: :integer, startTime: :datetime,
       endTime: :datetime, startPoint: :string, endPoint: :string,
@@ -68,6 +79,14 @@ class AirlineBasicServicesController < ApplicationController
 
   def get_flight_by_id
     render soap: Flight.find(params[:id]).to_json
+  end
+
+  soap_action "get_airline_by_id",
+    args: {id: :integer},
+    return: :string
+
+  def get_airline_by_id
+    render soap: Airline.find_by(id: params[:id]).to_json
   end
 
   soap_action "get_all_flights",
